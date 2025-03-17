@@ -2,6 +2,7 @@
 # ---------------------------------
 import streamlit as st
 import controlador
+import time
 
 def mostrar_productos():
     st.title("Gestión de Productos")
@@ -36,7 +37,10 @@ def agregar_producto():
     if st.button("Agregar Producto"):
         try:
             mensaje = controlador.agregar_producto_controlador(nombre, categoria, precio, stock)
-            st.success(mensaje)
+            msg_placeholder = st.empty()
+            msg_placeholder.success(mensaje)
+            time.sleep(3)  # Mostrar el mensaje por 3 segundos
+            msg_placeholder.empty()  # Ocultar mensaje después del tiempo
             st.rerun()
         except ValueError as ve:
             st.error(ve)

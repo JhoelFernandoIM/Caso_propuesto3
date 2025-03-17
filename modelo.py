@@ -31,7 +31,7 @@ def agregar_producto(nombre, categoria, precio, stock):
         raise ValueError("El precio debe ser un número decimal y el stock un número entero.")
     
     except Exception as e:
-        if "duplicate key value" in str(e) or "unique constraint" in str(e).lower():
+        if "duplicate key value violates unique constraint" in str(e):
             raise ValueError("Error: Ya existe un producto con este nombre.")
         else:
             raise Exception(f"Error al agregar producto: {e}")

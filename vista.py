@@ -9,7 +9,20 @@ st.title("Gestión de Productos")
 # Mostrar productos
 datos = controlador.obtener_productos_controlador()
 df = pd.DataFrame(datos)
-st.dataframe(df)
+
+st.subheader("Lista de Productos")
+for _, row in df.iterrows():
+    with st.container():
+        col1, col2, col3, col4, col5, col6 = st.columns(6)
+        col1.write(row["id"])
+        col2.write(row["nombre"])
+        col3.write(row["categoria"])
+        col4.write(row["precio"])
+        col5.write(row["stock"])
+        if col6.button("Eliminar", key=f"del_{row['id']}"):
+            controlador.eliminar_producto_controlador(row["id"])
+            st.success("Producto eliminado correctamente.")
+            st.rerun()
 
 # Formulario para agregar productos
 st.subheader("Agregar Nuevo Producto")
@@ -21,7 +34,7 @@ if st.button("Agregar Producto"):
     try:
         controlador.agregar_producto_controlador(nombre, categoria, precio, stock)
         st.success("Producto agregado correctamente.")
-        st.experimental_rerun()
+        st.rerun()
     except Exception as e:
         st.error(f"Error: {e}")
 
@@ -36,17 +49,6 @@ if st.button("Actualizar Producto"):
     try:
         controlador.actualizar_producto_controlador(id_editar, nuevo_nombre, nueva_categoria, nuevo_precio, nuevo_stock)
         st.success("Producto actualizado correctamente.")
-        st.experimental_rerun()
-    except Exception as e:
-        st.error(f"Error: {e}")
-
-# Eliminar productos
-st.subheader("Eliminar Producto")
-id_eliminar = st.number_input("ID del Producto a eliminar", min_value=1, step=1)
-if st.button("Eliminar Producto"):
-    try:
-        controlador.eliminar_producto_controlador(id_eliminar)
-        st.success("Producto eliminado correctamente.")
-        st.experimental_rerun()
+        st.rerun()
     except Exception as e:
         st.error(f"Error: {e}")

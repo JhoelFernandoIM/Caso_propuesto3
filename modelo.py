@@ -11,6 +11,8 @@ def obtener_productos():
     return response.data if response.data else []
 
 def agregar_producto(nombre, categoria, precio, stock):
+    if not nombre.strip():
+        raise ValueError("El nombre no puede estar vacío.")
     try:
         precio = float(precio)
         stock = int(stock)
@@ -21,6 +23,8 @@ def agregar_producto(nombre, categoria, precio, stock):
         raise Exception(f"Error al agregar producto: {e}")
 
 def actualizar_producto(id, nombre, categoria, precio, stock):
+    if not nombre.strip():
+        raise ValueError("El nombre no puede estar vacío.")
     try:
         precio = float(precio)
         stock = int(stock)

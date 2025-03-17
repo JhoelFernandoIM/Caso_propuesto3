@@ -6,7 +6,7 @@ def obtener_productos_controlador():
     return modelo.obtener_productos()
 
 def agregar_producto_controlador(nombre, categoria, precio, stock):
-    modelo.agregar_producto(nombre, categoria, precio, stock)
+    return modelo.agregar_producto(nombre, categoria, precio, stock)
 
 def actualizar_producto_controlador(id, nombre, categoria, precio, stock):
     modelo.actualizar_producto(id, nombre, categoria, precio, stock)

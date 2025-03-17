@@ -20,12 +20,12 @@ def mostrar_productos():
                 if st.button("Actualizar", key=f"actualizar_{i}"):
                     controlador.actualizar_producto_controlador(producto["id"], nombre, categoria, precio, stock)
                     st.success("Producto actualizado correctamente.")
-                    st.experimental_rerun()
+                    st.rerun()
             with col2:
                 if st.button("Eliminar", key=f"eliminar_{i}"):
                     controlador.eliminar_producto_controlador(producto["id"])
                     st.warning("Producto eliminado.")
-                    st.experimental_rerun()
+                    st.rerun()
 
 def agregar_producto():
     st.subheader("Agregar Nuevo Producto")
@@ -37,7 +37,7 @@ def agregar_producto():
         try:
             mensaje = controlador.agregar_producto_controlador(nombre, categoria, precio, stock)
             st.success(mensaje)
-            st.experimental_rerun()
+            st.rerun()
         except ValueError as ve:
             st.error(ve)
         except Exception as e:

@@ -13,16 +13,26 @@ def obtener_productos():
 def agregar_producto(nombre, categoria, precio, stock):
     if not nombre.strip():
         raise ValueError("El nombre no puede estar vacío.")
+    
     try:
         precio = float(precio)
         stock = int(stock)
-        supabase.table("productos").insert({"nombre": nombre, "categoria": categoria, "precio": precio, "stock": stock}).execute()
+        
+        response = supabase.table("productos").insert({
+            "nombre": nombre,
+            "categoria": categoria,
+            "precio": precio,
+            "stock": stock
+        }).execute()
+        
         return "Producto agregado correctamente."
+
     except ValueError:
         raise ValueError("El precio debe ser un número decimal y el stock un número entero.")
+    
     except Exception as e:
-        if "duplicate key value" in str(e):
-            raise ValueError("Error: El nombre del producto ya existe.")
+        if "duplicate key value" in str(e) or "unique constraint" in str(e).lower():
+            raise ValueError("Error: Ya existe un producto con este nombre.")
         else:
             raise Exception(f"Error al agregar producto: {e}")
 
